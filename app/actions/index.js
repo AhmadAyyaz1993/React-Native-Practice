@@ -7,12 +7,20 @@ export function getData(){
     return (dispatch) => {
  
         //Make API Call
+        fetch('https://jsonplaceholder.typicode.com/photos')
+        .then((response) => response.json())
+        .then((responseJson) => {
+            dispatch({type: DATA_AVAILABLE, data:responseJson});
+        })
+        .catch((error) => {
+        console.error(error);
+        });
         //For this example, I will be using the sample data in the json file
         //delay the retrieval [Sample reasons only]
-        setTimeout(() => {
-            const data  = Data.instructions;
-            dispatch({type: DATA_AVAILABLE, data:data});
-        }, 2000);
+        // setTimeout(() => {
+        //     const data  = Data.instructions;
+            
+        // }, 2000);
  
     };
 }

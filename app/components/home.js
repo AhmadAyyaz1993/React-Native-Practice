@@ -52,10 +52,10 @@ class Home extends Component {
         return (
             <View style={styles.row}>
                 <Text style={styles.title}>
-                    {(parseInt(index) + 1)}{". "}{item.title}
+                    {(parseInt(index))}{". "}{item.title}
                 </Text>
                 <Text style={styles.description}>
-                    {item.description}
+                    {item.url}
                 </Text>
             </View>
         )
