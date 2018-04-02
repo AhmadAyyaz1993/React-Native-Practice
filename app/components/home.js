@@ -6,6 +6,7 @@ import {
     FlatList,
     View,
     Text,
+    Image,
     ActivityIndicator
 } from 'react-native';
 
@@ -42,7 +43,7 @@ class Home extends Component {
                         ref='listRef'
                         data={this.props.data}
                         renderItem={this.renderItem}
-                        keyExtractor={(item, index) => index}/>
+                        keyExtractor={(item, index) => index.toString()}/>
                 </View>
             );
         }
@@ -54,9 +55,11 @@ class Home extends Component {
                 <Text style={styles.title}>
                     {(parseInt(index))}{". "}{item.title}
                 </Text>
-                <Text style={styles.description}>
-                    {item.url}
-                </Text>
+                <Image
+                resizeMode={'cover'}
+                style={{ width: '100%', height: 200 }}
+                source={{uri: item.url}}
+                />
             </View>
         )
     }
