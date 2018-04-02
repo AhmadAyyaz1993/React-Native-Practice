@@ -52,12 +52,18 @@ class Home extends Component {
     renderItem({item, index}) {
         return (
             <View style={styles.row}>
+             <View style={styles.rowInLine}>
+             <Image
+                style={{ width: 40, height: 40 }}
+                source={{uri: item.thumbnailUrl}}
+                />
                 <Text style={styles.title}>
                     {(parseInt(index))}{". "}{item.title}
                 </Text>
+            </View>
                 <Image
                 resizeMode={'cover'}
-                style={{ width: '100%', height: 200 }}
+                style={{ width: '100%', height: 200,marginTop:8 }}
                 source={{uri: item.url}}
                 />
             </View>
@@ -99,6 +105,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: "#ccc",
         padding: 10
+    },
+
+    rowInLine:{
+        flex: 1,
+        flexDirection: "row"
     },
 
     title:{
