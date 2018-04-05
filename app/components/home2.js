@@ -7,7 +7,6 @@ import {
     View,
     Text,
     Image,
-    TouchableHighlight,
     ActivityIndicator
 } from 'react-native';
 
@@ -16,21 +15,20 @@ import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 
-class Home extends Component {
-    static navigationOptions = () => ({
-        title: 'Home'
-      })
+class Home2 extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        title: `Item ${navigation.state.params.itemId}`
+    })
     constructor(props) {
         super(props);
 
         this.state = {
         };
 
-        this.renderItem = this.renderItem.bind(this);
     }
 
     componentDidMount() {
-        this.props.getData(); //call our action
+        this.props.getDataById(this.props.navigation.state.params.itemId); //call our action
     }
 
     render() {
@@ -43,41 +41,27 @@ class Home extends Component {
         } else {
             return (
                 <View style={{flex:1, backgroundColor: '#F5F5F5', paddingTop:20}}>
-                    <FlatList
-                        ref='listRef'
-                        data={this.props.data}
-                        renderItem={this.renderItem}
-                        keyExtractor={(item, index) => index.toString()}/>
+                    
+                    <View style={styles.rowInLine}>
+                    <Image
+                        style={{ width: 40, height: 40 }}
+                        source={{uri: this.props.data.thumbnailUrl}}
+                        />
+                        <Text style={styles.title}>
+                            {this.props.data.id}{". "}{this.props.data.title}
+                        </Text>
+                    </View>
+                        <Image
+                        style={{ width: '100%', height: 200,marginTop:8 }}
+                        source={{uri: this.props.data.url}}
+                        />
+                    
                 </View>
             );
         }
     }
 
-    renderItem({item, index}) {
-        return (
-            <View style={styles.row}>
-             <View style={styles.rowInLine}>
-             <Image
-                style={{ width: 40, height: 40 }}
-                source={{uri: item.thumbnailUrl}}
-                />
-                <Text style={styles.title}>
-                    {item.id}{". "}{item.title}
-                </Text>
-            </View>
-            <TouchableHighlight onPress={() => {
-                    this.props.navigation.navigate('Home2',{itemId: item.id})
-                  }}>
-                <Image
-                resizeMode={'cover'}
-                style={{ width: '100%', height: 200,marginTop:8 }}
-                source={{uri: item.url}}
-                
-                />
-            </TouchableHighlight>
-            </View>
-        )
-    }
+    
 };
 
 
@@ -87,8 +71,8 @@ class Home extends Component {
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
     return {
-        loading: state.dataReducer.loading,
-        data: state.dataReducer.data
+        loading: state.detailDataReducer.loading,
+        data: state.detailDataReducer.data
     }
 }
 
@@ -100,7 +84,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home2);
 
 const styles = StyleSheet.create({
     activityIndicatorContainer:{
