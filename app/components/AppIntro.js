@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
       height: 320,
     }
   });
-  
   const slides = [
     {
       key: 'somethun',
